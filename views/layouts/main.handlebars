@@ -1,0 +1,413 @@
+<!doctype html>
+<html>
+
+<head>
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/public/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/img/favicon-16x16.png">
+  <meta charset="utf-8" />
+  <title>Curlybois</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/public/libs/linedTextArea/jquery-linedtextarea.css">
+  <!--Bootstrap CSS depedancy-->
+  <link rel="stylesheet" type="text/css" href="/public/libs/bootstrap/css/bootstrap.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!--sidebar CSS-->
+  <link rel="stylesheet" type="text/css" href="/public/css/sidebar.css">
+  <!--template CSS-->
+  <link rel="stylesheet" type="text/css" href="/public/css/template.css">
+  <!--editor CSS-->
+  <link rel="stylesheet" type="text/css" href="/public/css/editor.css">
+
+  <!--Syntax hilighting-->
+  <link rel="stylesheet" type="text/css" href="/public/libs/codemirror/lib/codemirror.css">
+
+    <link rel="stylesheet" type="text/css" href="/public/libs/codemirror/addon/hint/show-hint.css">
+
+  <!-- Theme -->
+  <link rel="stylesheet" type="text/css" href="/public/libs/codemirror/theme/eclipse.css">
+  <link rel="stylesheet" type="text/css" href="/public/libs/codemirror/theme/tomorrow-night-bright.css">
+
+
+    <link rel="faq" href="faq.css">
+
+</head>
+<script>
+  //true if document is already in the database
+  {{#if docSaved}}
+    var docSaved = true;
+  {{else}}
+    var docSaved = false;
+  {{/if}}
+</script>
+
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" id="brand" href="javascript:void(0);"><i class="fas fa-chevron-circle-right"></i> Curlybois</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                {{#if docSaved}}
+                    <li>
+                        <b><a style="color:whitesmoke" class="nav-link" id="displayFileName"></a></b>
+                    </li>
+                {{/if}}
+                <li class="dropdown nav-item">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="FileBtn" href="javascript:void(0);">File</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="nav-link" id="NewBtn" href="javascript:void(0);">New<span class="sr-only">(current)</span></a></li>
+                        <li><a class="nav-link" id="DownloadBtn" href="javascript:void(0)">Download</a></li>
+                        {{#if docSaved}}
+                            <li class="nav-item"><a class="nav-link" id="DelBtn" href="javascript:void(0);">Delete</a></li>
+                        {{/if}}
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="SaveBtn" href="javascript:void(0);">Save</a>
+                </li>
+                {{#if docSaved}}
+                    <li><a class="nav-link" id="ShareBtn" href="javascript:void(0);">Share</a></li>
+                {{/if}}
+                <li class="nav-item">
+                    <a class="nav-link" id="StlyeBtn" href="javascript:void(0);">Dark</a>
+                </li>
+
+                <li class="nav-item">
+                    <input list="langs" name="plangs" id="plangid" style="margin-top:5px;">
+                    <datalist id="langs">
+                        
+                    </datalist>
+                    <a id="langBtn" class="nav-link" style="float:right;" href="javascript:void(0);">Change language</a>
+                    <!--<input type="submit" value="Change language" onsubmit="modlang = $('#plangid').val()">-->
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-success font-weight-bold invisible" id="MessageItem"></a>
+                </li>
+
+
+            </ul>
+            <!-- Button trigger modal -->
+            <div class="ml-auto">
+                <button type="button" class="btn btn-primary rounded-30" data-toggle="modal" data-target="#faqModal">
+              ?
+          </button>
+            </div>
+        </div>
+
+
+
+    </nav>
+    <!-- FAQ Modal -->
+    <div class="modal fade" id="faqModal" tabindex="-1" role="dialog" aria-labelledby="faqModalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content modal-lg">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="faqModalLongTitle">FAQ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="includedContent"></div>
+                    <!--Greeting-->
+                    <p>Welcome to the FAQ</p>
+                    <p>Below you can find general information on each of the Curlybois functions</p>
+                    <!--Style Toggle-->
+
+                    <!--Saving-->
+
+                    <button class="faqButton btn-primary btn" onclick="myFunction('mySave')" id="SaveBtn_Faq" href="javascript:void(0);">Save</button>
+                    <div id="mySave" style="display:none">
+
+                        Clicking this saves the document and starts an <b>auto-save</b> function for the file, ensuring your
+                        documents are constantly backed up
+                    </div>
+
+
+                    <!--New-->
+                    <p></p>
+                    <button class="faqButton btn-primary btn" onclick="myFunction('myNew')" id="NewBtn_Faq" href="javascript:void(0);">New</button>
+                    <div id="myNew" style="display:none">
+                        Clicking this creates a <b>new document</b> but prompts the user to save if they have not already done so
+                    </div>
+
+                    <!--Downloading-->
+                    <p></p>
+
+                    <button class="faqButton btn-primary btn" onclick="myFunction('myDown')" id="DownloadBtn_Faq" href="javascript:void(0);">Download</button>
+                    <div id="myDown" style="display:none">
+                        Clicking this downloads the document to a user specified location
+                    </div>
+
+                    <!--Sharing-->
+                    <p></p>
+
+                    <button class="faqButton btn-primary btn" onclick="myFunction('myShare')" id="ShareBtn_Faq" href="javascript:void(0);">Share</button>
+                    <div id="myShare" style="display:none">
+                        Clicking this shares the document with others who you wish to collaborate with (only available after saving)
+                    </div>
+
+                    <!--Dark-->
+                    <p></p>
+
+                    <button class="faqButton btn-primary btn" onclick="myFunction('myDark')" id="ShareBtn_Faq" href="javascript:void(0);">Dark</button>
+                    <div id="myDark" display="none">
+                        Clicking this toggles the documents theme between dark/light
+                    </div>
+
+
+
+
+                    <script>
+                        function myFunction(id) {
+                            var x = document.getElementById(id);
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+                        }
+                    </script>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invite User Modal-->
+    <div class="modal fade" id="AddUserModal" tabindex="-1" role="dialog" aria-labelledby="AddUserModalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content modal-lg">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Invite User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form class="addUserForm">
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-8">
+                                <input type="email" placeholder="email address.." class="side-btn form-control" id="AddUserEmailField">
+                            </div>
+                            <div class="col-4">
+                                <select id="AddUserPermissionLevelSelect" class="custom-select" style="margin-top:10px">
+                          <option value="2">Owner</option>
+                          <option value="1">Editor</option>
+                          <option value="0">Viewer</option>
+                        </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div id="includedContent"></div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="SendInviteBtn" type="submit" class="btn btn-primary">Send Invite</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Remove User Modal-->
+    <div class="modal fade" id="RemoveUserModal" tabindex="-1" role="dialog" aria-labelledby="RemoveUserModalTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-lg">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Remove User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form class="remove-user-form">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-8">
+                                    <input type="email" placeholder="email address.." class="side-btn form-control" id="RemoveUserEmailField">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <div id="includedContent"></div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button id="RemoveUserBtn" type="submit" class="btn btn-primary">Remove User</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <div class="wrapper">
+
+
+        <!-- Sidebar -->
+
+        <nav id="sidebar" class="active">
+            <div class="sidebar-header">
+                <h3>Curlybois</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                {{#if user}}
+                    <p><b>Account:</b> {{user.username}}</p>
+                    <li>
+                        <!--User's Documents-->
+                        <a href="#menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Your documents</a>
+                        <ul class="collapse list-unstyled" id="menuSubmenu">
+                            <a href="#ownersDocsSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Owned pages</a>
+                            <ul class="collapse list-unstyled sub-ul" id="ownersDocsSubmenu">
+                            </ul>
+
+                            <a href="#editorsDocsSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Editable pages</a>
+                            <ul class="collapse list-unstyled sub-ul" id="editorsDocsSubmenu">
+                            </ul>
+
+                            <a href="#viewersDocsSubmenu" id="menuSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Viewable pages</a>
+                            <ul class="collapse list-unstyled sub-ul" id="viewersDocsSubmenu">
+                            </ul>
+                        </ul>
+                    </li>
+                {{/if}}
+
+
+                <div class="container-editor container">
+                    <li class="active">
+                        {{#if user}}
+                            {{#if docSaved}}
+                                <li>
+                                    <!-- Page Options -->
+                                    <a href="#pageOptionSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Page Options</span></a>
+                                    <ul class="collapse list-unstyled" id="pageOptionSubmenu">
+                                        <div id="displayNameAbleFile" style="display:none">
+                                            <li>
+                                                <input class="side-btn form-control" type="text" placeholder="filename" id="filename" maxlength="20">
+                                            </li>
+                                            <li>
+                                                <button class="side-btn form-control" id="nameFileBtn">Rename File</button>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                </li>
+                    </li>
+
+                    <li>
+                        <!--User Permissions -->
+                        <a href="#permissionsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">User Permissions</span></a>
+                        <ul class="collapse list-unstyled" id="permissionsSubmenu">
+
+                            <!--owners submenu-->
+                            <a href="#ownersPermsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Owners</span></a>
+                            <ul class="collapse list-unstyled" id="ownersPermsSubmenu">
+                                {{#each page.owners}}
+                                    <li><a href="javascript:void(0);">{{this}}</a></li>
+                                {{/each}}
+                            </ul>
+
+                            <!--editors submenu-->
+                            <a href="#editorsSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Editors</span></a>
+                            <ul class="collapse list-unstyled" id="editorsSubmenu">
+                                {{#each page.editors}}
+                                    <li><a href="javascript:void(0);">{{this}}</a></li>
+                                {{/each}}
+                            </ul>
+
+                            <!--viewers submenu-->
+                            <a href="#viewersSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" class="font-weight-bold " aria-expanded="false">Viewers</span></a>
+                            <ul class="collapse list-unstyled" id="viewersSubmenu">
+                                {{#each page.viewers}}
+                                    <li><a href="javascript:void(0);">{{this}}</a></li>
+                                {{/each}}
+                            </ul>
+                            <div class="container">
+                                {{#if isOwner}}
+                                <button href="#AddUserModal" class="side-btn form-control" id="AddUserMenuBtn" data-toggle="modal" data-target="#AddUserModal">Invite</button>
+                                <button href="#RemoveUserModal" class="side-btn form-control" id="RemoveUserMenuBtn" data-toggle="modal" data-target="#RemoveUserModal">Remove User</button>
+                                {{/if}}
+                            </div>
+                        </ul>
+                    </li>
+                    {{/if}}
+                {{else}}
+                        <a href="#homeSubmenu" class="sidenav-item dropdown-toggle" data-toggle="collapse" aria-expanded="false">Login</a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <div id='loginReturnBlock' style="display:none">
+                                <li>
+                                    <p style="color:red" id="loginReturnText"></p>
+                                </li>
+                            </div>
+                            <div class="container">
+                                <form class="signin-form">
+                                  <li><input type="email" placeholder="email" class="side-btn form-control" id="UsernameField"></li>
+                                  <li><input type="password" placeholder="password" class="side-btn form-control" id="PasswordField"></li>
+                                  <li><button class="side-btn form-control" type="submit" value="login" id="LoginBtn">Login</button></li>
+                                  <li><button class="side-btn form-control" type="submit" value="register" id="RegisterBtn">Signup</button></li>
+                              </form>
+                          </div>
+                        </ul>
+                {{/if}}
+                        </li>
+                </div>
+
+                </ul>
+                <div class="container">
+                    {{#if user}}
+                        <button class="side-btn form-control" id="LogoutBtn">Logout</button>
+                    {{/if}}
+                </div>
+        </nav>
+
+        {{{body}}}
+    </div>
+</body>
+<!--jQuery-->
+<script src="/public/libs/jquery/jquery-3.3.1.min.js"></script>
+<!--Linedtextareas-->
+<script src="/public/libs/linedTextArea/jquery-linedtextarea.js"></script>
+<!--Bootstrap-->
+<script src="/public/libs/bootstrap/js/bootstrap.min.js"></script>
+<!--Controller-->
+<script src="/public/js/controller.js"></script>
+<!-- Highlight jS -->
+
+<script src="/public/libs/codemirror/lib/codemirror.js"></script>
+
+<script src="/public/libs/codemirror/addon/hint/show-hint.js"></script>
+<script src="/public/libs/codemirror/addon/hint/css-hint.js"></script>
+<script src="/public/libs/codemirror/addon/hint/javascript-hint.js"></script>
+<script src="/public/libs/codemirror/addon/hint/anyword-hint.js"></script>
+<script src="/public/libs/codemirror/mode/meta.js"></script>
+<!--<script src="/public/libs/codemirror/mode/javascript/javascript.js"></script>-->
+<!--<script src="/public/libs/codemirror/mode/python/python.js"></script>-->
+<!--<script src="/public/libs/codemirror/mode/clike/clike.js"></script>-->
+
+
+<!--langlist-->
+<script src="/public/js/pathlist.js"></script>
+<!--Socket.io-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script
+<!--main-->
+<script src="/public/js/main.js"></script>
+<!--keyboard input-->
+<script src="/public/js/keyboard.js"></script>
+
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+<!--Front end unit test library-->
+<!--<script src="chai.js"></script>-->
+<!--<script src="chai-http.js"></script>-->
+<!--<script> chai.use(chaiHttp); </script>-->
+</html>

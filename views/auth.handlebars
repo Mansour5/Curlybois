@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<!-- TODO Add to redirect page -->
+<head>
+    <meta charset="utf-8" />
+    <title>Example App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap CSS depedancy-->
+    <link rel="stylesheet" type="text/css" href="/public/libs/bootstrap/css/bootstrap.min.css">
+    <!--template CSS-->
+    <link rel="stylesheet" type="text/css" href="/public/css/template.css">
+    <!--editor CSS-->
+    <link rel="stylesheet" type="text/css" href="/public/css/editor.css">
+</head>
+<body>
+    <div class="input">
+        <label for="username">User Name</label>
+        <input type="text" id="username" name="username">
+    </div>
+    <div class="input">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password">
+    </div>
+    <a id="LoginBtn" href="javascript:void(0);">Login</a>
+    <a id="RegisterBtn" href="javascript:void(0);">Register</a>
+    <a id="LogoutBtn" href="javascript:void(0);">Logout</a>
+{{user}}
+
+    </body>
+    <!--jQuery-->
+    <script src="/public/libs/jquery/jquery-3.3.1.min.js"></script>
+    <!--Bootstrap-->
+    <script src="/public/libs/bootstrap/js/bootstrap.min.js"></script>
+    <!--Controller-->
+    <script src="/public/js/controller.js"></script>
+    <!--Front end unit test library-->
+    <!--<script src="chai.js"></script>-->
+    <!--<script src="chai-http.js"></script>-->
+    <!--<script> chai.use(chaiHttp); </script>-->
+    </html>
