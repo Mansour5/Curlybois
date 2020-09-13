@@ -7,15 +7,19 @@ const sendEmail = require("../modules/MailToUser");
 
 let validateEmail = function (req, res) {
     var username = req.body.username.trim();
-
+    // callback is null
     User.findOne({username: username},function (err, rst) {
         if(err) console.log(err);
         //TODO get the starting bit of address.
-        //req.protocol+ "//" +
-        var address = req.get('host') + "/authenticatetoken/"+ rst.authToken
-        sendEmail(username, 'Curlyboi account authentication', link(address), function () {
-            res.status(201).json('Registration successful. An validation email has been send.');
-        });
+        //req.protocol+ "//"+
+
+        //test authToken
+        if(rst.authToken){
+            var address = req.get('host') + "/authenticatetoken/"+ rst.authToken
+            sendEmail(username, 'Curlyboi account authentication', link(address), function () {
+                res.status(201).json('Registration successful. An validation email has been send.');
+            });
+        }
     })
 };
 

@@ -60,7 +60,12 @@ const socketAuth = require('socketio-auth')(io, {
 });
 
 //connect to database
-mongoose.connect(config.getDatabaseURI());
+mongoose.connect(config.getDatabaseURI(), {
+    authSource:"admin",
+    ssl: true,
+}).then(() => {
+    console.log('‘MongoDB Connected…’')
+});
 
 // Parsers
 app.use(bodyParser.json());
