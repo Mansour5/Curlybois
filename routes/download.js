@@ -17,7 +17,6 @@ router.get('/page/download/', function (req, res, next) {
 
     //find page
     Page.findOne({page_id: pageId, viewers: {$in: [username, 'guest']}}, function (err, rst) {
-        console.log("rst: " +rst);
         if(err){
             console.log(err);
         }

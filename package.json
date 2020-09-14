@@ -3,28 +3,18 @@
   "version": "0.0.1",
   "description": "A cloud based text editor",
   "main": "app.js",
-  "directories": {
-    "test": "tests"
-  },
   "scripts": {
     "test": "mocha $(find tests -name '*.js')",
-    "start": "nodemon app.js --ignore 'public/*'"
+    "dev": "nodemon --inspect=0.0.0.0 app.js --ignore 'public/*'",
+    "start": "node app.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Daily-Engineers/CloudTextEditor.git"
-  },
-  "author": "",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Daily-Engineers/CloudTextEditor/issues"
-  },
-  "homepage": "https://github.com/Daily-Engineers/CloudTextEditor#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
     "chai-mongoose": "0.0.1",
+    "dotenv": "^8.2.0",
     "express": "^4.16.4",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
@@ -36,7 +26,6 @@
     "mongoose": "^5.0.7",
     "nodemailer": "^4.6.2",
     "nodemon": "^1.14.12",
-    "npm": "^5.6.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^4.5.0",

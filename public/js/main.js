@@ -23,11 +23,11 @@ if (docSaved) {
     });
 }
 //Auto-save every 8 seconds if the doc is in the database already
-if (docSaved) {
-    setInterval(function() {
-        savePage();
-    }, 8000);
-}
+// if (docSaved) {
+//     setInterval(function() {
+//         savePage();
+//     }, 8000);
+// }
 
 function displayLoginMsg(msg, valid) {
     if(valid == true){

@@ -203,6 +203,34 @@ $('#DownloadBtn').on('click', function() {
         }
     })
 });
+
+//save button
+$('#SaveBtn_Faq').on('click', function() {
+    var editorText = editor.getValue();
+
+    var page = {
+        type: typeext,
+        content: editorText,
+        isInDB: docSaved? true:false
+    };
+    $.ajax({
+        method: 'post',
+        url: '/save',
+        data: page,
+        datatype: 'json',
+        success: function(page, textStatus, xhr) {
+            if (xhr.status == 201) {
+                window.location.href = '/doc/'+page.page_id;
+            }
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    })
+});
+
+
+
 //namefile
 // $(document).on('keyup', '#filename', function() {
 //     var item = '#filename';

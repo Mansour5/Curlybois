@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const User = require("../models/users");
-const savePage = require("../modules/savePage");
 const link = require("../models/AuthenticateEmailText");
-const sendEmail = require("../modules/MailToUser");
+const savePage = require("./savePage");
+const sendEmail = require("./MailToUser");
 
 
 let validateEmail = function (req, res) {
@@ -14,8 +14,9 @@ let validateEmail = function (req, res) {
         //req.protocol+ "//"+
 
         //test authToken
-        if(rst.authToken){
+        if('authToken' in rst){
             var address = req.get('host') + "/authenticatetoken/"+ rst.authToken
+            console.log(`User validation link: ${address}`)
             sendEmail(username, 'Curlyboi account authentication', link(address), function () {
                 res.status(201).json('Registration successful. An validation email has been send.');
             });

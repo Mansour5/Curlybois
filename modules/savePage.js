@@ -2,7 +2,7 @@ const Page = require('../models/page');
 const users = require('../models/users');
 let save = async function(req, res, next) {
   let pageContent = req.body.content;
-  let isInDB = (req.body.isInDB == 'true');
+  let isInDB = req.body.isInDB == 'true';
 
   var username = req.user?req.user.username:'guest';
 

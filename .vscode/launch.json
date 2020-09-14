@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "App",
+            "type": "node",
+            "request": "attach",
+            "preLaunchTask": "up",
+            "port": 9229,
+            "address": "localhost",
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": "/app/",
+            "protocol": "auto",
+            "timeout": 50000,
+            "internalConsoleOptions": "openOnSessionStart",
+            "restart": true
+        },
+    ]
+}

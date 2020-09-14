@@ -20,14 +20,14 @@ router.get('/doc/:page_id', function(req, res) {
     Page.findOne({
         'page_id': req.params.page_id
     }).exec((err, page) => {
-        if (page) {
+        if (page && 'user' in req) {
             if (page.viewers.includes('guest') || req.user && page.viewers.includes(req.user.username)) {
-                console.log(page);
                 res.render('editor', {
-                    page: page,
+                    content: page.content,
                     docSaved: true,
                     user: req.user,
                     isOwner: page.owners.includes(req.user.username)
+
                 });
             } else {
                 res.status(403).send('<h1>You do not have permission to view this page</h1><p>Please <a href="/">sign in</a> to continue</p>');

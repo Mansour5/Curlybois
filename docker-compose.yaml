@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  mongodb:
+    image: mongo:4.2-bionic
+    restart: always
+    volumes: 
+      - mongodb:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${DB_NAME}
+
+  app:
+    image: node:14-alpine
+    restart: on-failure
+    working_dir: /app
+    ports: 
+        - 3000:3000
+        - 9229:9229
+    volumes: 
+      - app:/app
+    depends_on: 
+      - mongodb
+    command: npm run dev
+
+volumes:
+  mongodb: {}
+  app:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}
+      o: bind
